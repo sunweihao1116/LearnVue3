@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app"></div>
+  <!-- <script src="../dist//vue.global.js"></script> -->
+  <script>
+  
+  // 创建createAppAPI
+  const createAppAPI = (render) => {
+    return function createApp(rootComponent) {
+      const app = {
+        mount(container) {
+          // 1. 获取vnode
+          const vnode = {
+            tag: 'h2',
+            props: null,
+            children: rootComponent.data().foo,
+          };
+          // 2. 执行render
+          render(vnode, container);
+        },
+      };
+      return app;
+    };
+  };
+
+  // 创建createRenderer
+  const createRenderer = (options) => {
+    // 定义render
+    const render = (vnode, container) => {
+      // 1. 获取宿主元素
+      const parent = options.querySelector(container);
+      // 2. 创建节点
+      const child = options.createElement(vnode.tag);
+      if (typeof vnode.children === 'string') {
+        child.innerText = vnode.children;
+      }
+      // 3. 插入
+      options.insert(child, parent);
+    };
+    return {
+      render,
+      createApp: createAppAPI(render),
+    };
+  };
+
+  // 创建renderer
+  const renderer = createRenderer({
+    querySelector(sel) {
+      return document.querySelector(sel);
+    },
+    createElement(tag) {
+      return document.createElement(tag);
+    },
+    insert(child, parent) {
+      parent.appendChild(child);
+    },
+  });
+
+  // 1 声明Vue
+  const Vue = {
+    createApp(options) {
+      return renderer.createApp(options);
+    }
+  }
+  Vue.createApp({
+    data() {
+      return {
+        foo:  'Fooo',
+      };
+    },
+  })
+  // .use(router)
+  // .use(store)
+  .mount('#app');
+  </script>
+</body>
+</html>
