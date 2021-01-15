@@ -1,13 +1,11 @@
 # LearnVue3
 
-## 1. createApp vue事例创建过程
+## 01. createApp vue事例创建过程
 createApp() Renderer 渲染器 render 渲染方法  
 
 createApp()的执行过程：（runtime: apiCreateApp.js/renderer.ts）  
 
-mount ->
-
-createAppAPI -> createAPP  ->
+createAppAPI -> createAPP  -> mount ->  render ->  
 
 创建 vnode ->
 
@@ -23,7 +21,7 @@ subTree(子树) —> patch (递归)
 
 ------------------
 
-## 2. 手撸简单 vue 步骤(手动创建 vnode) 原 vnode 来源根组件渲染函数
+## 02. 手撸简单 vue 步骤(手动创建 vnode) 原 vnode 来源根组件渲染函数
 
 ￼1. 声明 Vue  
 ￼2. 创建 renderer = createRenderer(options) options: 自定义渲染器特有平台操作。例如：document.querySelector()……  
@@ -34,14 +32,14 @@ subTree(子树) —> patch (递归)
   · 5.1 获取 vnode  
   · 5.2 执行 render
 ```
-## 3. 模仿canvas构造器
+## 03. 模仿canvas构造器
 
-## 4. 手撸reactive函数
+## 04. 手撸reactive函数
   vue2 -> vue3 new Proxy 代替 Object.defineProperty; 减少遍历次数，对深层数据做到数据响应式。性能更快，内存更小。  
   Reflect解决异常问题  
   get 时判断子节点是否为object， 进行递归解决嵌套问题  
 
-## 5. 使用Vue新API
+## 05. 使用Vue新API
 1. createApp
 2. setup
 3. onMounted
@@ -50,3 +48,33 @@ subTree(子树) —> patch (递归)
 6. watchEffect
 7. toRefs
 8. ......
+
+## 06. 数据响应式effect
+1. effectStack[];
+2. effect(fn); // 接收一个fn, 添加到effectStack并执行，完成后清除
+3. createReactiveEffect();
+4. reactiveEffect();
+5. targetMap、depsMap、deps; // new WeakMap([taget, new Map(key, [fn1, fn2, ...])]
+6. track 依赖收集
+7. trigger 触发函数;
+
+// reactive  
+将track在 reactive get时调用进行依赖收集，trigger在 reactive  set、deleteProperty时触发函数
+
+
+
+
+## 07. 虚拟DOM： js对象  Fragment(分片（多个子节点）)/vue2，template只能有一个子节点
+新增dynamicChildren 动态节点  diff更加高效，记录动态值 无需重新遍历整棵树  
+新增dynamicProps  
+新增patchFlag 属性更新标记  
+（template适用，jsx不适用）  
+......  
+读取vue3，renderer源码->走渲染过程。
+
+## 08. diff 
+patchKeyedChildren（掐头去尾，少增多删。乱序直接遍历）  
+
+## 09. mount  
+
+## 10. patch

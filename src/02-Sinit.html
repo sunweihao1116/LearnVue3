@@ -11,7 +11,7 @@
   <!-- <script src="../dist//vue.global.js"></script> -->
   <script>
   
-  // 创建createAppAPI
+  // 4. 创建createAppAPI
   const createAppAPI = (render) => {
     return function createApp(rootComponent) {
       const app = {
@@ -30,7 +30,7 @@
     };
   };
 
-  // 创建createRenderer
+  // 3. 创建createRenderer
   const createRenderer = (options) => {
     // 定义render
     const render = (vnode, container) => {
@@ -50,7 +50,7 @@
     };
   };
 
-  // 创建renderer
+  // 2. 创建renderer
   const renderer = createRenderer({
     querySelector(sel) {
       return document.querySelector(sel);

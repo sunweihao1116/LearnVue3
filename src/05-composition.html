@@ -19,23 +19,6 @@
   <script>
     const { createApp, reactive, computed, onMounted, watch, watchEffect, toRefs } = Vue;
 
-    createApp({
-      setup() {
-        //  1.消除this
-        //  2.增加可读性、维护性
-        //  3.复用性
-        const { count, addFlag, add, updateAdd, doubleCount, oppositeCount } = useCount();
-        return {
-          count,
-          addFlag,
-          add,
-          updateAdd,
-          doubleCount,
-          oppositeCount,
-        };
-      }
-    }).mount('#app');
-
     const useCount = () => {
       const state = reactive({
         count: 0,
@@ -67,6 +50,25 @@
         oppositeCount,
       };
     };
+
+    createApp({
+      setup() {
+        //  1.消除this
+        //  2.增加可读性、维护性
+        //  3.复用性
+        const { count, addFlag, add, updateAdd, doubleCount, oppositeCount } = useCount();
+        return {
+          count,
+          addFlag,
+          add,
+          updateAdd,
+          doubleCount,
+          oppositeCount,
+        };
+      }
+    }).mount('#app');
+
+    
   </script>
 </body>
 </html>
