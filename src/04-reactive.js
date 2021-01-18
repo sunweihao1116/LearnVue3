@@ -83,23 +83,23 @@ function trigger(target, key) {
   deps.forEach(dep => dep());
 };
 
-const obj = reactive({
-  foo: 'foo',
-  a: {
-    b: 1,
-  },
-});
+// const obj = reactive({
+//   foo: 'foo',
+//   a: {
+//     b: 1,
+//   },
+// });
 
-effect(() => {
-  console.log('foo', obj.foo);
-});
-effect(() => {
-  console.log('foo,b--->', obj.foo, obj.a.b);
-});
+// effect(() => {
+//   console.log('foo', obj.foo);
+// });
+// effect(() => {
+//   console.log('foo,b--->', obj.foo, obj.a.b);
+// });
 
 // obj.foo;
 // obj.foo = 'fooooooo';
-obj.a.b = 2;
+// obj.a.b = 2;
 // obj.a.b;
 // delete obj.foo;
 // console.log(obj);

@@ -49,7 +49,7 @@ subTree(子树) —> patch (递归)
 7. toRefs
 8. ......
 
-## 06. 数据响应式effect
+## 06. reactive数据响应式 effect（添加副作用函数）
 1. effectStack[];
 2. effect(fn); // 接收一个fn, 添加到effectStack并执行，完成后清除
 3. createReactiveEffect();
@@ -75,6 +75,6 @@ subTree(子树) —> patch (递归)
 ## 08. diff 
 patchKeyedChildren（掐头去尾，少增多删。乱序直接遍历）  
 
-## 09. mount  
+## 09. mount
 
 ## 10. patch
