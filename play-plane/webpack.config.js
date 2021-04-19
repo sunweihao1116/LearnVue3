@@ -11,6 +11,22 @@ module.exports = {
   devServer: {
     contentBase: path.resolve(__dirname, './dist'),
   },
+  module: {
+    rules: [
+      {
+        test: /\.(png|jpe?g|svg|gif)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              outputPath: 'assets/images/',
+              publicPath: '', 
+            },
+          },
+        ],
+      },
+    ],
+  },
   plugins: [
     new HtmlWebpackPlugin({
       filename: 'index.html',
