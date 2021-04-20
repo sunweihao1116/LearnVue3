@@ -4,7 +4,7 @@ import { Container, Graphics, Sprite, Text, Texture } from 'pixi.js';
 
 const renderer = createRenderer({
   createElement(type) {
-    console.log(type);
+    // console.log(type);
     let element;
     switch (type) {
       case 'Container':
