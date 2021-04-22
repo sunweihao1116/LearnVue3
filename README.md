@@ -72,8 +72,8 @@ subTree(子树) —> patch (递归)
 ......  
 读取vue3，renderer源码->走渲染过程。
 
-## 08. diff 
-patchKeyedChildren（掐头去尾，少增多删。乱序直接遍历）  
+## 08. diff 核心算法
+patchKeyedChildren（掐头去尾，少增多删。乱序直接遍历） renderer.ts 
 
 ## 09. mount
 

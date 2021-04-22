@@ -1,6 +1,6 @@
-// 敌方飞机
+// 子弹
 import { h, defineComponent, watch, toRefs } from '@vue/runtime-core';
-import enemyPlaneImg from '../../assets/images/enemyPlane.png'; // 104*136
+import bulletImg from '../../assets/images/bullet.png'; // 20*30
 
 export default defineComponent({
   props: ['x', 'y'],
@@ -9,10 +9,10 @@ export default defineComponent({
     return {
       x,
       y,
-    }
+    };
   },
   render(ctx) {
-    const vnode = h('Container', { x: ctx.x, y: ctx.y }, [ h('Sprite', { texture: enemyPlaneImg }) ]);
+    const vnode = h('Container', { x: ctx.x, y: ctx.y }, [ h('Sprite', { texture: bulletImg }) ]);
     return vnode;
   }
 });
