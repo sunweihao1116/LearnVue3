@@ -13,6 +13,9 @@ const renderer = createRenderer({
       case 'Sprite':
         element = new Sprite();
         break;
+      case 'Text':
+        element = new Text();
+        break;
       default:
         break;
     }

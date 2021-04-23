@@ -1,6 +1,6 @@
 // 游戏页面
 
-import { h, defineComponent, reactive, watch, onMounted, onUnmounted } from '@vue/runtime-core';
+import { h, defineComponent, reactive, ref, onMounted, onUnmounted } from '@vue/runtime-core';
 import Plane from '../components/Plane';
 import EnemyPlane from '../components/EnemyPlane';
 import Bullet from '../components/Bullet';
@@ -8,22 +8,27 @@ import Map from '../components/Map';
 import { game } from '../game';
 import { collision } from '../utils/collision';
 import { randomNum } from '../utils/randomNum';
+import { usekeyboardMove } from '../utils/usekeyboardMove';
 
 export default defineComponent({
   setup(props, { emit }) {
+    const point = ref(0);
     // 本方飞机
     const { planeInfo } = useCreatePlane();
     // 敌方飞机
     const { enemyPlanes } = useCreateEnemyPlane();
     // 本方子弹
     const { bullets, addBullet } = useCreateBullets();
+
     // 战斗环节
-    useFighting(planeInfo, enemyPlanes, bullets, emit);
+    useFighting(planeInfo, enemyPlanes, bullets, emit, point);
 
     const onAttack = (planeInfo) => {
       addBullet(planeInfo);
     };
+
     return {
+      point,
       planeInfo,
       enemyPlanes,
       bullets,
@@ -39,8 +44,10 @@ export default defineComponent({
     const bulletsMap = ctx.bullets.map((bulletInfo) => {
       return h(Bullet, { x: bulletInfo.x, y: bulletInfo.y });
     })
+    
     const vnode = h('Container', [
       h(Map),
+      // h('Text', { x: 0, y: 0 }, '分数：' + ctx.point),
       h(Plane, { x: ctx.planeInfo.x, y: ctx.planeInfo.y, onAttack: ctx.onAttack }),
       ...enemyPlanesMap,
       ...bulletsMap,
@@ -51,30 +58,9 @@ export default defineComponent({
 
 // 本方飞机
 function useCreatePlane() {
-  const planeInfo = reactive({ x: 180, y: 642, width: 120, height: 158});
+  let planeInfo = reactive({ x: 180, y: 642, width: 120, height: 158});
   const speed = 10;
-  window.addEventListener('keydown', (e) => {
-    const viewWidth = 480;
-    const viewHeight = 800;
-    const maxY = viewHeight - planeInfo.height; // 边界处理
-    const maxX = viewWidth - planeInfo.width;
-    switch (e.code) {
-      case 'ArrowUp':
-        planeInfo.y >= 0 ? planeInfo.y -= speed : null;
-        break;
-      case 'ArrowDown':
-        planeInfo.y <=  maxY ? planeInfo.y += speed : null;
-        break;
-      case 'ArrowLeft':
-        planeInfo.x >= 0 ? planeInfo.x -= speed : null;
-        break;
-      case 'ArrowRight':
-        planeInfo.x <= maxX ? planeInfo.x += speed : null;
-        break;
-      default:
-        break;
-    }
-  });
+  planeInfo = Object.assign(planeInfo, usekeyboardMove({ x:planeInfo.x, y: planeInfo.y, speed }));
   return {
     planeInfo,
   };
@@ -105,7 +91,7 @@ function useCreateEnemyPlane() {
       y: -136,
       width: 104,
       height: 136,
-    })
+    });
   }, 2000);
   return {
     enemyPlanes,
@@ -113,7 +99,7 @@ function useCreateEnemyPlane() {
 };
 
 // 战斗
-function useFighting(planeInfo, enemyPlanes, bullets, emit) {
+function useFighting(planeInfo, enemyPlanes, bullets, emit, point) {
   const handleTicker = () => {
     const speed = 1;
     enemyPlanes.forEach((enemyInfo, index) => {
@@ -134,7 +120,7 @@ function useFighting(planeInfo, enemyPlanes, bullets, emit) {
           bullets.splice(bulletIndex, '1');
         }
         if (collision(bulletInfo, enemyInfo)) { // 碰撞检测子弹/敌机消失
-          // console.log('hit');
+          point.value += 10;
           enemyPlanes.splice(enemyindex, '1');
           bullets.splice(bulletIndex, '1');
         }

@@ -5,7 +5,7 @@ import PlayGame from './pages/PlayGame';
 
 export default defineComponent({
   setup(props, cxt) {
-    let currentPageName = ref('PlayGame');
+    let currentPageName = ref('StartPage');
     let currentPage = computed(() => {
       if (currentPageName.value === 'StartPage') {
         return StartPage

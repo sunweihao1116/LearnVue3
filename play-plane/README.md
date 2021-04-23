@@ -23,6 +23,17 @@
 ## 创建StartPage(开始页面)、PlayGame(游戏页面)
 创建页面并拆分游戏页面背景、飞机,组件化；
 
+## 创建我方飞机、敌方飞机、我方子弹
+封装我方飞机生成函数useCreatePlane；
+
+封装敌方飞机生成函数useCreateEnemyPlane；
+
+封装我方子弹生成函数useCreateBullets；
+
+完成敌机与本机碰撞检测、完成子弹与敌机碰撞检测；
+
+优化并封装本方飞机移动效果usekeyboardMove。
+
 
 
 
