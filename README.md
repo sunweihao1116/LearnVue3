@@ -38,12 +38,13 @@ subTree(子树) —> patch (递归)
   · 5.2 执行 render
 ```
 ## 03. 模仿canvas构造器
+[飞机大战(webpack + Custom Renderer API + Composition API + canvas + pixijs)](play-plane/README.md)
 
 ## 04. 手撸reactive函数
   vue2 -> vue3 new Proxy 代替 Object.defineProperty; 减少遍历次数，对深层数据做到数据响应式。性能更快，内存更小。  
 
   Reflect解决异常问题  
-  
+
   get 时判断子节点是否为object， 进行递归解决嵌套问题  
 
 ## 05. 使用Vue新API
